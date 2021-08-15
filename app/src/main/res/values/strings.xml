@@ -1,0 +1,18 @@
+<resources>
+    <string name="pref_speakerphone_key">speakerphone_preference</string>
+    <string name="pref_speakerphone_default">auto</string>
+
+    <string name="app_name">Supputors</string>
+    <string name="user_id">ID</string>
+    <string name="user_nick">닉네임</string>
+    <string name="user_pw">PW</string>
+    <string name="user_name">이름</string>
+    <string name="user_gender">성별</string>
+    <string name="user_birth"> 생년월일 8자리 (예시:19990426) </string>
+    <string name="user_phone">휴대전화 번호 (예시:01012345678)</string>
+    <string name="login">로그인</string>
+    <string name="signup">회원가입</string>
+    <string name="man">남자</string>
+    <string name="woman">여자</string>
+
+</resources>

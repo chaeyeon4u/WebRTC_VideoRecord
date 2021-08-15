@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@drawable/bg">
+    <TextView
+        android:id="@+id/tx_title"
+        android:layout_marginBottom="16dp"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="75dp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_below="@+id/tx_title"
+        android:layout_width="match_parent"
+        app:cardCornerRadius="16dp"
+        app:cardBackgroundColor="@color/teal_700"
+        android:background="@color/teal_700"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:padding="16dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:paddingTop="50dp"
+                android:background="@drawable/curve_background"
+                android:hint="Enter Meeting ID"
+                android:id="@+id/meeting_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- Google Material Design : Google에서 제공하는 디자인 컴포넌트
+                                             web, Android, iOS, Flutter 사용가능 -->
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:id="@+id/start_meeting"
+                    android:layout_marginBottom="32dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    app:cornerRadius="8dp"
+                    android:textColor="@color/teal_700"
+                    android:layout_weight="1"
+                    app:backgroundTint="@color/white"
+                    android:background="@color/white"
+                    android:text="Start Call"
+                    android:layout_height="wrap_content"/>
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:id="@+id/join_meeting"
+                    android:layout_marginBottom="32dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    app:cornerRadius="8dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/teal_700"
+                    app:backgroundTint="@color/white"
+                    android:background="@color/white"
+                    android:text="Join Call"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</RelativeLayout>
