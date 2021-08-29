@@ -1,4 +1,5 @@
 package com.example.supputorsproject2
+/* firebase에 값을 insert */
 
 import android.app.Application
 import android.content.Context
@@ -6,7 +7,6 @@ import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import org.webrtc.*
-
 
 class RTCClient(
         context: Application,
@@ -114,6 +114,7 @@ class RTCClient(
                                 "sdp" to desc?.description,
                                 "type" to desc?.type
                         )
+                        //calls collection에 meetingID document의 offer(sdp, type)을 추가
                         db.collection("calls").document(meetingID)
                                 .set(offer)
                                 .addOnSuccessListener {

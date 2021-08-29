@@ -84,13 +84,13 @@ class RTCActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /* Media Recorder의 권한을 얻기위한 부분 일부 시작*/
+        /* Media Recorder의 권한을 얻기위한 부분 일부 시작 */
         checkSelfPermission()
         /*Miedia recorder 부분 일부 끝*/
 
-        if (intent.hasExtra("meetingID"))
+        if (intent.hasExtra("meetingID"))//MainActivity로부터 meetingID 받아옴
             meetingID = intent.getStringExtra("meetingID")!!
-        if (intent.hasExtra("isJoin"))
+        if (intent.hasExtra("isJoin"))//MainActivity로부터 isJoin 받아옴(false)
             isJoin = intent.getBooleanExtra("isJoin",false)
 
         checkCameraAndAudioPermission()
@@ -130,13 +130,6 @@ class RTCActivity : AppCompatActivity() {
             }
             rtcClient.enableAudio(isMute)
         }
-        end_call_button.setOnClickListener {
-            rtcClient.endCall(meetingID)
-            remote_view.isGone = false
-            Constants.isCallEnded = true
-            finish()
-            startActivity(Intent(this@RTCActivity, MainActivity::class.java))
-        }
         video_record_button.setOnClickListener{
             if(isRecord){
                 isRecord = false
@@ -146,6 +139,13 @@ class RTCActivity : AppCompatActivity() {
                 video_record_button.setImageResource(R.drawable.video_record_paused)
                 startMediaProjection()//MediaRecoder 녹화기능 시작할 때
             }
+        }
+        end_call_button.setOnClickListener {
+            rtcClient.endCall(meetingID)
+            remote_view.isGone = false
+            Constants.isCallEnded = true
+            finish()
+            startActivity(Intent(this@RTCActivity, MainActivity::class.java))
         }
     }
 
@@ -246,6 +246,7 @@ class RTCActivity : AppCompatActivity() {
         }
     }
 
+    //OK
     private fun requestCameraAndAudioPermission(dialogShown: Boolean = false) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, CAMERA_PERMISSION) &&
             ActivityCompat.shouldShowRequestPermissionRationale(this, AUDIO_PERMISSION) &&
@@ -256,6 +257,7 @@ class RTCActivity : AppCompatActivity() {
         }
     }
 
+    //OK
     private fun showPermissionRationaleDialog() {
         AlertDialog.Builder(this)
                 .setTitle("Camera And Audio Permission Required")
@@ -270,7 +272,7 @@ class RTCActivity : AppCompatActivity() {
                 }
                 .show()
     }
-
+/////////////////////////////////
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == CAMERA_AUDIO_PERMISSION_REQUEST_CODE && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
@@ -290,6 +292,7 @@ class RTCActivity : AppCompatActivity() {
     }
 
     /*MEDIA RECORDER 기능 추가를 위한 함수 시작*/
+    //OK
     override fun onActivityResult(
         requestCode: Int,
         resultCode: Int,
@@ -309,6 +312,7 @@ class RTCActivity : AppCompatActivity() {
     // * @param resultCode
     // * @param data
      */
+    //ok
     private fun screenRecorder(resultCode: Int, data: Intent?) {
         val screenRecorder = createRecorder()
         val mediaProjectionManager =
@@ -362,6 +366,7 @@ class RTCActivity : AppCompatActivity() {
      *
      * @return
      */
+    //ok
     private fun createRecorder(): MediaRecorder? {
         val mediaRecorder = MediaRecorder()
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -386,6 +391,7 @@ class RTCActivity : AppCompatActivity() {
     /**
      * 뷰 초기화
      */
+    //Ok
     private fun initView() {
         findViewById<View>(R.id.video_record_button).setOnClickListener { // 미디어 프로젝션 요청
             startMediaProjection()
@@ -396,10 +402,14 @@ class RTCActivity : AppCompatActivity() {
      * 미디어 프로젝션 요청
      *
      */
+    //OK
+    //MediaProjectionManager : 사용자에게 권한을 요청한다.
     private fun startMediaProjection() { //MediaProjection : : Audio Recorder 과 Screen Capture을 위한 Document Reference
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //getSystemService를 통해 MediaProjection 서비스를 받아온다.
             val mediaProjectionManager =
                 getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
+            //사용자에게 권한을 요청한다.
             startActivityForResult(
                 mediaProjectionManager.createScreenCaptureIntent(),
                 REQUEST_CODE_MediaProjection
@@ -412,6 +422,7 @@ class RTCActivity : AppCompatActivity() {
      *
      * @return
      */
+    //OK
     fun checkSelfPermission(): Boolean {
         var temp = ""
         //RECORD_AUDIO권한 유뮤 확인.

@@ -49,9 +49,11 @@ class SignalingClient(
     }
 
     private fun connect() = launch {
-        db.enableNetwork().addOnSuccessListener {
-            listener.onConnectionEstablished()
+        db.enableNetwork().addOnSuccessListener {//네트워크 연결 성공이후 db 연동이 성공적으로 됐을 경우 실행
+            listener.onConnectionEstablished()//SignalingClientListener에 성공적 연결을 알림
         }
+
+        //element를 브로드캐스팅하여 보낸다.
         val sendData = sendChannel.offer("")
         sendData.let {
             Log.v(this@SignalingClient.javaClass.simpleName, "Sending: $it")
@@ -68,26 +70,31 @@ class SignalingClient(
 //                    }
         }
         try {
+            //firebase에 "calls"라는 collection에 meetingID를 넣어서 성공적으로 수행할 경우
             db.collection("calls")
                 .document(meetingID)
-                .addSnapshotListener { snapshot, e ->
+                .addSnapshotListener { snapshot, e ->//firestore의 data를 snapshot에 담음
 
                     if (e != null) {
                         Log.w(TAG, "listen:error", e)
                         return@addSnapshotListener
                     }
 
+                    //firebase의 type값이 "OFFER", "ANSWER", "END_CALL"인지 확인후 처리.. sdp와 type을 insert 한다.
                     if (snapshot != null && snapshot.exists()) {
+                        //"OFFER" -> SignallingClientListener.onOfferReceived
+                        //"ANSWER" -> SignallingClientListener.onAnswerReceived
+                        //"END_CALL" -> SignallingClientListener.onCallEnded
                         val data = snapshot.data
                         if (data?.containsKey("type")!! &&
                             data.getValue("type").toString() == "OFFER") {
-                                listener.onOfferReceived(SessionDescription(
-                                    SessionDescription.Type.OFFER,data["sdp"].toString()))
+                            listener.onOfferReceived(SessionDescription(
+                                SessionDescription.Type.OFFER,data["sdp"].toString()))
                             SDPtype = "Offer"
                         } else if (data?.containsKey("type") &&
                             data.getValue("type").toString() == "ANSWER") {
-                                listener.onAnswerReceived(SessionDescription(
-                                    SessionDescription.Type.ANSWER,data["sdp"].toString()))
+                            listener.onAnswerReceived(SessionDescription(
+                                SessionDescription.Type.ANSWER,data["sdp"].toString()))
                             SDPtype = "Answer"
                         } else if (!Constants.isIntiatedNow && data.containsKey("type") &&
                             data.getValue("type").toString() == "END_CALL") {
@@ -100,6 +107,8 @@ class SignalingClient(
                         Log.d(TAG, "Current data: null")
                     }
                 }
+
+            //"calls" collection 안에 "candidates"라는 collection에서 사용자의 속성을 확인한후 처리.
             db.collection("calls").document(meetingID)
                     .collection("candidates").addSnapshotListener{ querysnapshot,e->
                         if (e != null) {
@@ -150,8 +159,9 @@ class SignalingClient(
         }
     }
 
+    //candidate이라는 collection에 값을 생성하여 firebase에 setting
     fun sendIceCandidate(candidate: IceCandidate?,isJoin : Boolean) = runBlocking {
-        val type = when {
+        val type = when {//candidate의 type을 구분
             isJoin -> "answerCandidate"
             else -> "offerCandidate"
         }
@@ -162,6 +172,8 @@ class SignalingClient(
                 "sdpCandidate" to candidate?.sdp,
                 "type" to type
         )
+
+        //calls>candidates에 data setting
         db.collection("calls")
             .document("$meetingID").collection("candidates").document(type)
             .set(candidateConstant as Map<String, Any>)
