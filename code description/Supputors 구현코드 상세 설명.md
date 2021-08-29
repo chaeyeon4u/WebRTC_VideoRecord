@@ -2,7 +2,7 @@
 
 # HomeActivity.kt
 
-![Untitled](Supputors%20%E1%84%80%E1%85%AE%E1%84%92%E1%85%A7%E1%86%AB%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%89%E1%85%A1%E1%86%BC%E1%84%89%E1%85%A6%20%E1%84%89%E1%85%A5%E1%86%AF%E1%84%86%E1%85%A7%E1%86%BC%20b9a213b7337342cc84780acb8ac3c1e6/Untitled.png)
+![Untitled](images/Untitled.png)
 
 **btn_shoot의 클릭리스너**
 
@@ -14,7 +14,7 @@
 
 # LoginActivity.kt
 
-![Untitled](Supputors%20%E1%84%80%E1%85%AE%E1%84%92%E1%85%A7%E1%86%AB%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%89%E1%85%A1%E1%86%BC%E1%84%89%E1%85%A6%20%E1%84%89%E1%85%A5%E1%86%AF%E1%84%86%E1%85%A7%E1%86%BC%20b9a213b7337342cc84780acb8ac3c1e6/Untitled%201.png)
+![Untitled1](images/Untitled1.png)
 
 **btn_login의 클릭 리스너**
 
@@ -28,7 +28,7 @@
 
 # MainActivity.kt
 
-![Untitled](Supputors%20%E1%84%80%E1%85%AE%E1%84%92%E1%85%A7%E1%86%AB%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%89%E1%85%A1%E1%86%BC%E1%84%89%E1%85%A6%20%E1%84%89%E1%85%A5%E1%86%AF%E1%84%86%E1%85%A7%E1%86%BC%20b9a213b7337342cc84780acb8ac3c1e6/Untitled%202.png)
+![Untitled2](images/Untitled2.png)
 
 **start_meeting 클릭리스너**
 
