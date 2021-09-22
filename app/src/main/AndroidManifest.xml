@@ -45,6 +45,8 @@
             android:theme="@style/Theme.FullScreen"
             android:exported="true"/>
 
+        <service android:name=".MediaRecordService"
+            android:foregroundServiceType="mediaProjection"></service>
 
     </application>
 

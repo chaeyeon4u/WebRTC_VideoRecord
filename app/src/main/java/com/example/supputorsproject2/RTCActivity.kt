@@ -130,16 +130,31 @@ class RTCActivity : AppCompatActivity() {
             }
             rtcClient.enableAudio(isMute)
         }
+
+        /* ForegroundService 적용 전 */
+        //Media Record Button
         video_record_button.setOnClickListener{
             if(isRecord){
+                //버튼 안눌린 상태로 변환
                 isRecord = false
+                //버튼 이미지 세팅
                 video_record_button.setImageResource(R.drawable.video_record)
+                //stopForegroundService
+                val mediaIntent = Intent(this@RTCActivity, MediaRecordService::class.java)
+                mediaIntent.action = "stopMediaRecordService"
+                startActivity(mediaIntent)
             }else{
                 isRecord = true
                 video_record_button.setImageResource(R.drawable.video_record_paused)
-                startMediaProjection()//MediaRecoder 녹화기능 시작할 때
+                //startMediaProjection()//MediaRecoder 녹화기능 시작할 때
+
+                //startForegroundService
+                val mediaIntent = Intent(this@RTCActivity, MediaRecordService::class.java)
+                mediaIntent.action = "startMediaRecordService"
+                startActivity(mediaIntent)
             }
         }
+
         end_call_button.setOnClickListener {
             rtcClient.endCall(meetingID)
             remote_view.isGone = false
@@ -404,7 +419,7 @@ class RTCActivity : AppCompatActivity() {
      */
     //OK
     //MediaProjectionManager : 사용자에게 권한을 요청한다.
-    private fun startMediaProjection() { //MediaProjection : : Audio Recorder 과 Screen Capture을 위한 Document Reference
+    public fun startMediaProjection() { //MediaProjection : : Audio Recorder 과 Screen Capture을 위한 Document Reference
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //getSystemService를 통해 MediaProjection 서비스를 받아온다.
             val mediaProjectionManager =
